@@ -1,4 +1,4 @@
-import { chakra, Flex, FlexProps, Text, VStack } from '@chakra-ui/react';
+import { chakra, Flex, FlexProps, Text, useBreakpointValue, VStack } from '@chakra-ui/react';
 import { randomColor, isDark } from '@chakra-ui/theme-tools';
 import Image from 'next/image';
 import React from 'react';
@@ -14,8 +14,8 @@ interface InitialProps extends FlexProps {
     name: string;
 }
 
-const InitialView = ({ name, ...rest }: InitialProps) => {
-    const words = name.split(' ');
+const ImageFallback = ({ name, ...rest }: InitialProps) => {
+    const words = name.trim().split(' ');
     const initials =
         words.length >= 2 ? `${words[0].charAt(0)}${words[words.length - 1].charAt(0)}` : words[0].charAt(0);
 
@@ -32,8 +32,10 @@ const InitialView = ({ name, ...rest }: InitialProps) => {
 };
 
 const MemberProfile = ({ profile, role }: { profile: Profile; role: string }): JSX.Element => {
+    const size = useBreakpointValue([220, 256]);
+
     return (
-        <VStack w={256} textAlign="center">
+        <VStack w={size} textAlign="center">
             {profile.pictureUrl && (
                 <MemberImage
                     src={profile.pictureUrl}
@@ -41,11 +43,11 @@ const MemberProfile = ({ profile, role }: { profile: Profile; role: string }): J
                     quality={100}
                     width={256}
                     height={256}
-                    w={256}
-                    h={256}
+                    w={size}
+                    h={size}
                 />
             )}
-            {!profile.pictureUrl && <InitialView name={profile.name} w={256} h={256} />}
+            {!profile.pictureUrl && <ImageFallback name={profile.name} w={size} h={size} />}
             <Text fontWeight="bold" fontSize="2xl">
                 {profile.name}
             </Text>
