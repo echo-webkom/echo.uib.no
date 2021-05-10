@@ -73,7 +73,6 @@ const OmOssPage = ({
 }): JSX.Element => {
     const bekkLogoFilter = useColorModeValue('invert(1)', 'invert(0)');
     const linkColor = useColorModeValue('blue', 'blue.400');
-
     return (
         <Layout>
             <SEO title="Om oss" />
